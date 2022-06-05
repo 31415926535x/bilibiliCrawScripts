@@ -11,10 +11,9 @@
 """
 
 
-from .model import VideoInfo
-# from ..utils import LogUtil
-import requests
+from bilibilicrawscripts.api.model import VideoInfo
 from bilibilicrawscripts.utils import LogUtil
+from bilibilicrawscripts.utils import CallApiFunc
 import json as JSON
 import time 
 
@@ -54,15 +53,10 @@ class CrawlUpsVideoInfo:
 
             url = "https://api.bilibili.com/x/space/arc/search?mid=" + mid + "&ps=" + ps + "&tid=0&pn=" + str(pn) + "&keyword=&order=pubdate&jsonp=jsonp"
             self.logger.info(url)
-            responseText = JSON.loads("{}")
-            try:
-                response = requests.get(url)
-                responseText = JSON.loads(response.text)
-            except: 
-                self.logger.error(self.FunctionTitle + "craw mid=%s failed", str(mid))
-            
+            responseText = CallApiFunc.CallApiFunc().apiRpc(url)
             self.logger.info("request code: %d, msg: %s" % ((responseText['code']), str(responseText['message'])))
             data = responseText['data']
+
             if (None == data):
                 self.logger.error(self.FunctionTitle + "craw mid=%s failed, data is null", str(mid))
                 break
