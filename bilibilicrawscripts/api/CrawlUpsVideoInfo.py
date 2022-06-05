@@ -72,6 +72,7 @@ class CrawlUpsVideoInfo:
                 videosCount = min(videosCount, maxVideoNum)
                 if (maxVideoNum == videosCount):
                     self.logger.info("this mid is a King of GAN.")
+                self.logger.info("will craw videos num: %d", videosCount)
                 flag = False
             
             pn += 1
@@ -82,6 +83,7 @@ class CrawlUpsVideoInfo:
                 videosID += 1
                 videoInfo = self.buildVideoInfo(vlist[i])
                 videos.append((videoInfo.aid, videoInfo))
+                print("handle %dth / %d video" %( videosID, videosCount), end='\r')
         
         self.logger.info("Got all " + mid + " 's videos")
         return videos
